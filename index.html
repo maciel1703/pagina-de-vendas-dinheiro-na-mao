@@ -101,9 +101,36 @@ details p{color:var(--mut);margin-top:10px}
 .fin{text-align:center;background:#0D110F}.fin .w{display:flex;flex-direction:column;align-items:center;gap:26px}
 .fin h2{max-width:16em}.fin p{font-size:19px;max-width:34em}
 footer{padding:40px 0;color:#8a958f;font-size:13px}footer b{display:block;font:800 15px Unbounded,sans-serif;color:#F2F5F2;margin-bottom:8px}
+/* efeitos */
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@property --p{syntax:"<percentage>";initial-value:0%;inherits:false}
+@keyframes spin{to{--a:360deg}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes sheen{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes pulse{50%{box-shadow:0 0 64px 0 rgba(77,240,138,.75)}}
+.hero{position:relative}.hero>.w{position:relative}
+.hero::before{content:"";position:absolute;inset:-25% -10% auto;height:75%;background:conic-gradient(from var(--a) at 50% 0,transparent,rgba(77,240,138,.24),transparent 40%,rgba(59,155,255,.16),transparent 70%);filter:blur(70px);animation:spin 16s linear infinite;pointer-events:none}
+.in{opacity:0;animation:up .85s cubic-bezier(.2,.7,.2,1) calc(var(--i)*120ms) forwards}
+.hero h1.in{background:linear-gradient(100deg,#fff 42%,#a4ffc4 50%,#fff 58%) 120% 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:up .85s cubic-bezier(.2,.7,.2,1) 120ms forwards,sheen 7s linear 1.2s infinite}
+.hero .pill{animation:pulse 2.8s ease-in-out infinite}
+.pill{position:relative;overflow:hidden}
+.pill::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%)}
+.pill:hover::after{transform:translateX(120%);transition:transform .7s}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}.rv.v{opacity:1;transform:none}
+.ph{transition:transform .25s ease-out}
+.ring{--p:26%;background:conic-gradient(var(--g) 0 var(--p),#3d403f 0);transition:--p 1.6s ease-out}
+.bar i{transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.coins i{transition:background .3s,color .3s}
+.oc{position:relative}
+.oc::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(77,240,138,.14),transparent 60%);pointer-events:none}
+.oc::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--a),transparent 0 70%,var(--g) 85%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 6s linear infinite;pointer-events:none}
+.cur{position:fixed;left:0;top:0;width:480px;height:480px;margin:-240px 0 0 -240px;border-radius:50%;background:radial-gradient(circle,rgba(77,240,138,.11),transparent 65%);mix-blend-mode:screen;pointer-events:none;z-index:5}
+@media(pointer:coarse){.cur{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.in,.rv{opacity:1!important;transform:none!important}.hero h1.in{-webkit-text-fill-color:#fff}}
 </style>
 </head>
 <body>
+<div class="cur" aria-hidden="true"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="c" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></symbol></svg>
 
 <header class="w top">
@@ -115,12 +142,12 @@ footer{padding:40px 0;color:#8a958f;font-size:13px}footer b{display:block;font:8
 <main>
 <section class="hero">
 <div class="w">
-<span class="tag">Kit para organizar seu mês em 10 minutos</span>
-<h1>Seu salário acaba antes do mês? Veja para onde ele vai</h1>
-<p class="sub">Divida o salário, anote cada gasto e comece sua reserva. Tudo no celular, sem planilha complicada e sem cadastro.</p>
-<div class="ctas"><a class="pill" href="#oferta">Quero organizar meu mês</a><span>R$ 19,90 · pagamento único</span></div>
+<span class="tag in" style="--i:0">Kit para organizar seu mês em 10 minutos</span>
+<h1 class="in">Seu salário acaba antes do mês? Veja para onde ele vai</h1>
+<p class="sub in" style="--i:2">Divida o salário, anote cada gasto e comece sua reserva. Tudo no celular, sem planilha complicada e sem cadastro.</p>
+<div class="ctas in" style="--i:3"><a class="pill" href="#oferta">Quero organizar meu mês</a><span>R$ 19,90 · pagamento único</span></div>
 
-<div class="frame" role="img" aria-label="Exemplo do painel do Dinheiro na Mão com mapa do mês, categorias e desafio das 30 moedas">
+<div class="frame in" style="--i:5" role="img" aria-label="Exemplo do painel do Dinheiro na Mão com mapa do mês, categorias e desafio das 30 moedas">
 <div class="scr">
 <div class="dk-card">
 <div style="font-size:13px;color:#b9c2bd">Mapa do mês · novembro de 2026</div>
@@ -259,5 +286,32 @@ footer{padding:40px 0;color:#8a958f;font-size:13px}footer b{display:block;font:8
 </main>
 
 <footer><div class="w"><b>Dinheiro na Mão</b>O Dinheiro na Mão é uma ferramenta educativa e não constitui aconselhamento financeiro. Os valores mostrados nas telas são exemplos ilustrativos.</div></footer>
+<script>
+(()=>{
+if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+const $=(q,r=document)=>[...r.querySelectorAll(q)];
+$('h2,.pgrid p,.fig,.steps>div,.oc,details,.fin .w>*').forEach(e=>{e.classList.add('rv');e.style.transitionDelay=[...e.parentNode.children].indexOf(e)%4*90+'ms'});
+const io=new IntersectionObserver(l=>l.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');io.unobserve(x.target)}}),{threshold:.15});
+$('.rv').forEach(e=>io.observe(e));
+const nums=r=>$('.big,.v',r).map(e=>{const m=e.textContent.trim().match(/^R\$\s?([\d.]+)$/);return m?{e,n:+m[1].replace(/\./g,'')}:0}).filter(Boolean);
+const st=new Map();
+$('.ph,.scr').forEach(r=>{
+const o={nums:nums(r),bars:$('.bar i',r).map(b=>({b,w:b.style.width})),coins:$('.coins i.on',r),rings:$('.ring',r)};
+o.nums.forEach(x=>x.e.textContent='R$ 0');o.bars.forEach(x=>x.b.style.width='0');o.coins.forEach(c=>c.classList.remove('on'));o.rings.forEach(g=>g.style.setProperty('--p','0%'));
+st.set(r,o)});
+const fx=new IntersectionObserver(l=>l.forEach(x=>{if(!x.isIntersecting)return;fx.unobserve(x.target);const o=st.get(x.target);
+o.bars.forEach(y=>y.b.style.width=y.w);o.rings.forEach(g=>g.style.setProperty('--p','26%'));
+o.coins.forEach((c,i)=>setTimeout(()=>c.classList.add('on'),400+i*70));
+const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1400),v=1-Math.pow(1-k,3);o.nums.forEach(y=>y.e.textContent='R$ '+Math.round(y.n*v).toLocaleString('pt-BR'));if(k<1)requestAnimationFrame(f)})(t0)}),{threshold:.35});
+st.forEach((o,r)=>fx.observe(r));
+if(matchMedia('(pointer:fine)').matches){
+$('.fig').forEach(f=>{const p=f.querySelector('.ph');
+f.addEventListener('pointermove',e=>{const b=p.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;p.style.transform=`perspective(900px) rotateY(${x*10}deg) rotateX(${-y*8}deg) translateY(-6px)`});
+f.addEventListener('pointerleave',()=>p.style.transform='')});
+$('.oc').forEach(c=>c.addEventListener('pointermove',e=>{const b=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-b.left+'px');c.style.setProperty('--my',e.clientY-b.top+'px')}));
+const cur=$('.cur')[0];addEventListener('pointermove',e=>cur.style.transform=`translate(${e.clientX}px,${e.clientY}px)`,{passive:true});
+}
+})();
+</script>
 </body>
 </html>
